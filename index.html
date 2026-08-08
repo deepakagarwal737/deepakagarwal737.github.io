@@ -3,93 +3,736 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deepak Agarwal | Portfolio</title>
-
+<title>Deepak Agarwal — Full-Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0f172a;
-  color: white;
-}
-header {
-  text-align: center;
-  padding: 60px 20px;
-}
-h1 {
-  font-size: 40px;
-}
-p {
-  color: #cbd5e1;
-}
-.section {
-  padding: 40px 20px;
-  max-width: 1000px;
-  margin: auto;
-}
-.skills span {
-  display: inline-block;
-  background: #1e293b;
-  padding: 8px 12px;
-  margin: 5px;
-  border-radius: 6px;
-}
-.projects .card {
-  background: #1e293b;
-  padding: 20px;
-  margin: 10px 0;
-  border-radius: 10px;
-}
-.contact a {
-  color: #38bdf8;
-  text-decoration: none;
-}
-</style>
+  :root{
+    --bg-void:#080B12;
+    --bg-panel:#111826;
+    --bg-panel-hi:#161f30;
+    --copper:#DE9A63;
+    --copper-dim:#8a6242;
+    --teal:#4FE3D1;
+    --teal-dim:#2a6b64;
+    --amber:#FF9A44;
+    --text-hi:#F3F5FA;
+    --text-mid:#8B94A8;
+    --text-dim:#535D72;
+    --line:#212b3d;
+    --radius:2px;
+  }
 
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    background:var(--bg-void);
+    color:var(--text-hi);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .mono{font-family:'JetBrains Mono', monospace;}
+  .display{font-family:'Space Grotesk', sans-serif;}
+
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  img{max-width:100%; display:block;}
+
+  ::selection{background:var(--copper); color:#0a0d14;}
+
+  /* ---------- circuit backdrop ---------- */
+  .circuit-bg{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:0.35;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 10%, transparent 75%);
+  }
+
+  .noise{
+    position:fixed; inset:0; z-index:1; pointer-events:none; opacity:0.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .container{max-width:1180px; margin:0 auto; padding:0 32px; position:relative; z-index:2;}
+
+  /* ---------- nav ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    backdrop-filter:blur(10px);
+    background:rgba(8,11,18,0.7);
+    border-bottom:1px solid var(--line);
+  }
+  nav.container{
+    display:flex; align-items:center; justify-content:space-between;
+    height:72px;
+  }
+  .logo{
+    font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:1.15rem;
+    letter-spacing:0.02em; display:flex; align-items:center; gap:8px;
+  }
+  .logo::before{
+    content:""; width:9px; height:9px; border-radius:50%;
+    background:var(--teal); box-shadow:0 0 10px 2px var(--teal);
+    display:inline-block;
+  }
+  .nav-links{display:flex; gap:36px; align-items:center;}
+  .nav-links a{
+    font-family:'JetBrains Mono', monospace; font-size:0.8rem;
+    letter-spacing:0.03em; color:var(--text-mid);
+    transition:color 0.2s ease; position:relative;
+  }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; bottom:-4px; width:0; height:1px;
+    background:var(--copper); transition:width 0.25s ease;
+  }
+  .nav-links a:hover{color:var(--text-hi);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{
+    font-family:'JetBrains Mono', monospace; font-size:0.78rem;
+    border:1px solid var(--copper-dim); color:var(--copper);
+    padding:9px 18px; border-radius:var(--radius);
+    transition:all 0.2s ease;
+  }
+  .nav-cta:hover{background:var(--copper); color:#0a0d14; box-shadow:0 0 20px -4px var(--copper);}
+  .nav-toggle{display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none;}
+  .nav-toggle span{width:22px; height:2px; background:var(--text-hi);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100vh; display:flex; align-items:center;
+    padding-top:110px; padding-bottom:60px; position:relative;
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.05fr 0.95fr; gap:40px; align-items:center;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace; font-size:0.75rem; letter-spacing:0.12em;
+    color:var(--teal); display:flex; align-items:center; gap:10px; margin-bottom:22px;
+    text-transform:uppercase;
+  }
+  .eyebrow::before{content:"//"; color:var(--copper);}
+  .hero h1{
+    font-family:'Space Grotesk', sans-serif; font-weight:700;
+    font-size:clamp(2.4rem, 4.6vw, 3.8rem); line-height:1.06; letter-spacing:-0.01em;
+    margin-bottom:26px;
+  }
+  .hero h1 .accent{color:var(--copper);}
+  .hero p.lead{
+    font-size:1.05rem; color:var(--text-mid); max-width:520px; margin-bottom:36px;
+  }
+  .hero-actions{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:52px;}
+  .btn{
+    font-family:'JetBrains Mono', monospace; font-size:0.82rem;
+    padding:15px 28px; border-radius:var(--radius); cursor:pointer;
+    display:inline-flex; align-items:center; gap:10px; letter-spacing:0.02em;
+    transition:all 0.22s ease; border:1px solid transparent;
+  }
+  .btn-primary{background:var(--amber); color:#0a0d14; font-weight:500;}
+  .btn-primary:hover{box-shadow:0 0 28px -4px var(--amber); transform:translateY(-2px);}
+  .btn-ghost{border-color:var(--line); color:var(--text-hi);}
+  .btn-ghost:hover{border-color:var(--teal); color:var(--teal);}
+
+  .hero-meta{display:flex; gap:34px; flex-wrap:wrap;}
+  .hero-meta div{border-left:1px solid var(--line); padding-left:14px;}
+  .hero-meta .num{font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:1.5rem; color:var(--text-hi);}
+  .hero-meta .lbl{font-family:'JetBrains Mono', monospace; font-size:0.68rem; color:var(--text-dim); letter-spacing:0.05em; text-transform:uppercase;}
+
+  /* 3D stage */
+  .stage{
+    position:relative; height:520px;
+  }
+  #stack-canvas{width:100%; height:100%; cursor:grab;}
+  #stack-canvas:active{cursor:grabbing;}
+  .stage-labels{
+    position:absolute; top:8%; right:2%; display:flex; flex-direction:column; gap:34px;
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem; color:var(--text-dim);
+    pointer-events:none;
+  }
+  .stage-labels li{display:flex; align-items:center; gap:8px; justify-content:flex-end;}
+  .stage-labels .tick{width:16px; height:1px; background:var(--copper-dim);}
+  .stage-hint{
+    position:absolute; bottom:6%; left:0; right:0; text-align:center;
+    font-family:'JetBrains Mono', monospace; font-size:0.68rem; color:var(--text-dim);
+    letter-spacing:0.05em; opacity:0.8;
+  }
+
+  /* ---------- ticker ---------- */
+  .ticker-wrap{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    background:var(--bg-panel); overflow:hidden; padding:20px 0; position:relative; z-index:2;
+  }
+  .ticker{display:flex; width:max-content; animation:scroll 32s linear infinite;}
+  .ticker-wrap:hover .ticker{animation-play-state:paused;}
+  .ticker span{
+    font-family:'JetBrains Mono', monospace; font-size:0.95rem; color:var(--text-dim);
+    padding:0 28px; white-space:nowrap; display:flex; align-items:center; gap:28px;
+  }
+  .ticker span b{color:var(--text-mid); font-weight:500;}
+  .ticker span::after{content:"◆"; color:var(--copper-dim); font-size:0.6rem;}
+  @keyframes scroll{0%{transform:translateX(0);} 100%{transform:translateX(-50%);}}
+
+  /* ---------- sections ---------- */
+  section{padding:120px 0; position:relative; z-index:2;}
+  .section-head{margin-bottom:64px; max-width:640px;}
+  .section-head .eyebrow{margin-bottom:16px;}
+  .section-head h2{
+    font-family:'Space Grotesk', sans-serif; font-weight:700;
+    font-size:clamp(1.8rem, 3vw, 2.5rem); letter-spacing:-0.01em;
+  }
+  .section-head p{color:var(--text-mid); margin-top:16px; font-size:1rem; max-width:560px;}
+
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity 0.7s ease, transform 0.7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* about */
+  .about-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:64px; align-items:start;}
+  .about-copy p{color:var(--text-mid); margin-bottom:18px; font-size:1rem;}
+  .about-copy strong{color:var(--text-hi); font-weight:600;}
+  .side-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:28px; border-left:2px solid var(--teal);
+  }
+  .side-card h3{font-family:'Space Grotesk',sans-serif; font-size:1.05rem; margin-bottom:14px;}
+  .side-card ul li{
+    display:flex; justify-content:space-between; padding:10px 0;
+    border-bottom:1px solid var(--line); font-size:0.88rem;
+  }
+  .side-card ul li:last-child{border-bottom:none;}
+  .side-card .k{color:var(--text-dim); font-family:'JetBrains Mono',monospace; font-size:0.75rem;}
+  .side-card .v{color:var(--text-hi);}
+
+  /* timeline */
+  .timeline{border-top:1px solid var(--line);}
+  .t-item{
+    display:grid; grid-template-columns:90px 1fr; gap:32px;
+    padding:42px 0; border-bottom:1px solid var(--line); position:relative;
+  }
+  .t-num{
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:2.1rem;
+    color:transparent; -webkit-text-stroke:1px var(--copper-dim);
+  }
+  .t-body h3{font-family:'Space Grotesk',sans-serif; font-size:1.25rem; margin-bottom:4px;}
+  .t-body .t-role{color:var(--teal); font-family:'JetBrains Mono',monospace; font-size:0.8rem; margin-bottom:6px; display:block;}
+  .t-body .t-years{
+    font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--text-dim);
+    float:right; border:1px solid var(--line); padding:5px 12px; border-radius:20px;
+  }
+  .t-body ul{margin-top:16px; display:grid; gap:9px;}
+  .t-body ul li{color:var(--text-mid); font-size:0.92rem; padding-left:18px; position:relative;}
+  .t-body ul li::before{content:"▸"; position:absolute; left:0; color:var(--copper);}
+
+  /* projects */
+  .proj-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  .proj-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:36px; transition:transform 0.15s ease, border-color 0.25s ease;
+    transform-style:preserve-3d; will-change:transform;
+  }
+  .proj-card:hover{border-color:var(--copper-dim);}
+  .proj-tag{
+    font-family:'JetBrains Mono',monospace; font-size:0.68rem; color:var(--amber);
+    letter-spacing:0.08em; text-transform:uppercase; margin-bottom:14px; display:block;
+  }
+  .proj-card h3{font-family:'Space Grotesk',sans-serif; font-size:1.4rem; margin-bottom:14px;}
+  .proj-card p{color:var(--text-mid); font-size:0.92rem; margin-bottom:22px;}
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    font-family:'JetBrains Mono',monospace; font-size:0.7rem; color:var(--text-mid);
+    border:1px solid var(--line); padding:5px 11px; border-radius:20px;
+  }
+
+  /* skills */
+  .skill-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  .skill-group{background:var(--bg-panel); border:1px solid var(--line); padding:26px; border-radius:var(--radius);}
+  .skill-group h4{
+    font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--text-dim);
+    text-transform:uppercase; letter-spacing:0.08em; margin-bottom:16px;
+  }
+  .skill-group .chip-row .chip:hover{border-color:var(--teal); color:var(--teal);}
+
+  /* education strip */
+  .edu-strip{
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px;
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:40px 0;
+  }
+  .edu-item .k{font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;}
+  .edu-item .v{font-family:'Space Grotesk',sans-serif; font-size:1.1rem;}
+
+  /* contact */
+  .contact{
+    text-align:center; padding:140px 0 120px;
+  }
+  .contact h2{
+    font-family:'Space Grotesk',sans-serif; font-weight:700;
+    font-size:clamp(2rem, 5vw, 3.4rem); letter-spacing:-0.01em; margin-bottom:20px;
+  }
+  .contact h2 .accent{color:var(--teal);}
+  .contact p.lead{color:var(--text-mid); max-width:480px; margin:0 auto 44px; font-size:1.02rem;}
+  .contact-actions{display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:56px;}
+  .contact-row{display:flex; justify-content:center; gap:44px; flex-wrap:wrap;}
+  .contact-row a{
+    font-family:'JetBrains Mono',monospace; font-size:0.85rem; color:var(--text-mid);
+    display:flex; align-items:center; gap:8px; transition:color 0.2s ease;
+  }
+  .contact-row a:hover{color:var(--copper);}
+  .copy-note{font-size:0.65rem; color:var(--teal); margin-left:4px; opacity:0; transition:opacity 0.2s ease;}
+  .copy-note.show{opacity:1;}
+
+  footer{
+    border-top:1px solid var(--line); padding:32px 0; text-align:center;
+    font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--text-dim);
+  }
+
+  @media (max-width: 880px){
+    .nav-links{
+      position:absolute; top:72px; left:0; right:0; flex-direction:column;
+      background:var(--bg-void); border-bottom:1px solid var(--line);
+      padding:24px 32px; gap:20px; display:none;
+    }
+    .nav-links.open{display:flex;}
+    .nav-toggle{display:flex;}
+    .nav-cta{display:none;}
+    .hero-grid{grid-template-columns:1fr;}
+    .stage{height:360px; order:-1;}
+    .about-grid, .proj-grid{grid-template-columns:1fr;}
+    .skill-grid{grid-template-columns:1fr 1fr;}
+    .t-item{grid-template-columns:1fr;}
+    .t-num{display:none;}
+  }
+  @media (max-width: 520px){
+    .skill-grid{grid-template-columns:1fr;}
+    .hero-meta{gap:22px;}
+  }
+</style>
 </head>
 <body>
 
+<div class="circuit-bg"></div>
+<div class="noise"></div>
+
 <header>
-  <h1>Deepak Agarwal</h1>
-  <p>Full Stack Developer | AI & Automation Expert</p>
+  <nav class="container">
+    <div class="logo">DA<span style="color:var(--text-dim);">.</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#stack">Stack</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Start a project →</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </nav>
 </header>
 
-<section class="section">
-  <h2>About Me</h2>
-  <p>I build scalable web apps, automation tools and AI chatbots using Node.js, Laravel, WordPress and modern technologies.</p>
-</section>
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="reveal in">
+        <div class="eyebrow">Full-stack developer · open for projects</div>
+        <h1>I build the <span class="accent">whole stack</span> — from server rack to storefront.</h1>
+        <p class="lead">3+ years shipping backend systems, REST APIs and CRM automation for e-commerce and healthcare platforms — across Laravel, Node.js and WordPress. I'm also the person who configured the firewall, so the systems I build tend to survive contact with production.</p>
+        <div class="hero-actions">
+          <a href="#work" class="btn btn-primary">View my work</a>
+          <a href="#contact" class="btn btn-ghost">Let's talk →</a>
+        </div>
+        <div class="hero-meta">
+          <div><div class="num">3+</div><div class="lbl">Years shipping</div></div>
+          <div><div class="num">10+</div><div class="lbl">Stacks &amp; platforms</div></div>
+          <div><div class="num">2</div><div class="lbl">Roles, zero downtime</div></div>
+        </div>
+      </div>
 
-<section class="section skills">
-  <h2>Skills</h2>
-  <span>Node.js</span>
-  <span>Laravel</span>
-  <span>WordPress</span>
-  <span>AngularJS</span>
-  <span>MongoDB</span>
-  <span>API Development</span>
-</section>
+      <div class="stage">
+        <canvas id="stack-canvas"></canvas>
+        <ul class="stage-labels">
+          <li><span class="tick"></span>Frontend</li>
+          <li><span class="tick"></span>Backend</li>
+          <li><span class="tick"></span>Database</li>
+          <li><span class="tick"></span>Integrations</li>
+          <li><span class="tick"></span>Infra</li>
+        </ul>
+        <div class="stage-hint">drag to rotate</div>
+      </div>
+    </div>
+  </section>
 
-<section class="section projects">
-  <h2>Projects</h2>
-
-  <div class="card">
-    <h3>AI Chatbot for Appointment Booking</h3>
-    <p>Automated booking, reminders and WhatsApp integration.</p>
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker mono" id="ticker"></div>
   </div>
 
-  <div class="card">
-    <h3>Expense Automation Tool</h3>
-    <p>Tracks expenses using voice, text and image processing.</p>
-  </div>
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container about-grid">
+      <div class="reveal">
+        <div class="eyebrow">About</div>
+        <h2 class="display" style="font-size:clamp(1.8rem,3vw,2.4rem); font-weight:700;">Backend-first. Client-obsessed.</h2>
+      </div>
+      <div class="about-copy reveal">
+        <p>I started out installing <strong>NAS storage, firewalls and biometric attendance hardware</strong> before I ever shipped an API — and it shows in how I build software. I design backends that assume the network will drop, the webhook will retry, and someone will ask for an export at 6pm on a Friday.</p>
+        <p>Today that means <strong>Laravel and Node.js APIs</strong>, <strong>WordPress and Shopify storefronts</strong>, and the unglamorous middle layer clients actually pay for: CRM automation across <strong>HubSpot, Zoho and Google Apps Script</strong>, Razorpay payment flows, WhatsApp template messaging, and cron jobs that quietly keep everything in sync.</p>
+        <div class="side-card" style="margin-top:32px;">
+          <h3 class="display">Quick facts</h3>
+          <ul>
+            <li><span class="k">CURRENTLY</span><span class="v">PHP &amp; Node.js Dev @ Engees Ecommerce</span></li>
+            <li><span class="k">EDUCATION</span><span class="v">BCA + MCA Integrated</span></li>
+            <li><span class="k">LANGUAGES</span><span class="v">English, Hindi</span></li>
+            <li><span class="k">FOCUS</span><span class="v">APIs, automation, performance</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-</section>
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Experience</div>
+        <h2>Where I've built things</h2>
+        <p>Two roles, one throughline: take messy business requirements and turn them into backend systems that hold up.</p>
+      </div>
+      <div class="timeline">
+        <div class="t-item reveal">
+          <div class="t-num">02</div>
+          <div class="t-body">
+            <span class="t-years">2022 — Present</span>
+            <span class="t-role">PHP &amp; Node.js Developer</span>
+            <h3>Engees Ecommerce Private Limited</h3>
+            <ul>
+              <li>Built and maintained web apps and backend APIs across Laravel (queues/jobs), Node.js, WordPress, OpenCart, CodeIgniter and Shopify — including custom QR code generation and WhatsApp template integrations.</li>
+              <li>Designed CRM and automation workflows across Google Apps Script, Google Sheets, Zoho Bookings, Zoho CRM and HubSpot for lead generation, data sync, logging and automated messaging.</li>
+              <li>Installed and integrated biometric/attendance hardware, and collaborated on custom development to resolve issues and tune performance across environments.</li>
+              <li>Improved reliability and UX through responsive implementation, functional testing and cross-device compatibility work.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="t-item reveal">
+          <div class="t-num">01</div>
+          <div class="t-body">
+            <span class="t-years">2019 — 2022</span>
+            <span class="t-role">PHP Developer</span>
+            <h3>PremWare Services India LLP</h3>
+            <ul>
+              <li>Installed, configured and maintained IT infrastructure — eSSL attendance devices, NAS storage, Sophos Firewall and custom PC builds — keeping operations secure and running.</li>
+              <li>Customized, secured and optimized WordPress sites, improving speed, mobile responsiveness, SEO and conversion.</li>
+              <li>Tuned slow-loading sites through caching, image and database optimization and clean code practices.</li>
+              <li>Built REST APIs for mobile apps and worked across multi-vendor platforms — vendor workflows, user roles, products and integrations.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section class="section contact">
-  <h2>Contact</h2>
-  <p>📞 +91-XXXXXXXXXX</p>
-  <p>📧 your@email.com</p>
-  <p>🌐 <a href="#">yourwebsite.com</a></p>
-</section>
+  <!-- PROJECTS -->
+  <section id="work">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Selected work</div>
+        <h2>Projects that shipped</h2>
+        <p>A marketplace built from scratch, and a healthcare platform tuned for speed and automation.</p>
+      </div>
+      <div class="proj-grid">
+        <div class="proj-card reveal" data-tilt>
+          <span class="proj-tag">Marketplace platform</span>
+          <h3>Advoiz</h3>
+          <p>A multi-vendor services marketplace with role-based access for admins, professionals and customers — plus a centralized lead, order and payment engine built around Razorpay.</p>
+          <p style="color:var(--text-mid); font-size:0.92rem;">Scalable REST APIs for self-registration and service discovery · commission-based revenue and payout logic · WhatsApp and email notifications on cron-based lifecycle triggers.</p>
+          <div class="chip-row" style="margin-top:22px;">
+            <span class="chip">Laravel</span><span class="chip">RBAC</span><span class="chip">Razorpay</span><span class="chip">WhatsApp API</span><span class="chip">Cron</span>
+          </div>
+        </div>
+        <div class="proj-card reveal" data-tilt>
+          <span class="proj-tag">Healthcare / WordPress</span>
+          <h3>Sakhiya Skin Clinic &amp; Just Skin &amp; Hair Clinic</h3>
+          <p>Custom post types and templates for structured content management, with performance work that took page load from sluggish to fast.</p>
+          <p style="color:var(--text-mid); font-size:0.92rem;">WebP image pipeline and caching · form-to-API automation with QR generation on payment confirmation · WooCommerce discounts, partial payments and automated PDF invoicing.</p>
+          <div class="chip-row" style="margin-top:22px;">
+            <span class="chip">WordPress</span><span class="chip">WooCommerce</span><span class="chip">CPTs</span><span class="chip">PDF automation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- SKILLS -->
+  <section id="stack">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="eyebrow">Toolkit</div>
+        <h2>Stack &amp; tools</h2>
+        <p>The full list — from what runs in the browser to what runs the server it's sitting on.</p>
+      </div>
+      <div class="skill-grid">
+        <div class="skill-group reveal">
+          <h4>Languages</h4>
+          <div class="chip-row"><span class="chip">PHP</span><span class="chip">JavaScript</span><span class="chip">HTML</span><span class="chip">CSS</span></div>
+        </div>
+        <div class="skill-group reveal">
+          <h4>Frameworks</h4>
+          <div class="chip-row"><span class="chip">Laravel</span><span class="chip">WordPress</span><span class="chip">CodeIgniter</span><span class="chip">Node.js</span><span class="chip">Express.js</span><span class="chip">AngularJS</span><span class="chip">Filament</span><span class="chip">Google Apps Script</span></div>
+        </div>
+        <div class="skill-group reveal">
+          <h4>Databases</h4>
+          <div class="chip-row"><span class="chip">MongoDB</span><span class="chip">MySQL</span></div>
+        </div>
+        <div class="skill-group reveal">
+          <h4>Cloud &amp; DevOps</h4>
+          <div class="chip-row"><span class="chip">AWS (S3)</span><span class="chip">Azure</span><span class="chip">CI/CD</span></div>
+        </div>
+        <div class="skill-group reveal">
+          <h4>Integrations &amp; Payments</h4>
+          <div class="chip-row"><span class="chip">REST APIs</span><span class="chip">Webhooks</span><span class="chip">Cron Jobs</span><span class="chip">JWT</span><span class="chip">OAuth</span><span class="chip">Razorpay</span></div>
+        </div>
+        <div class="skill-group reveal">
+          <h4>Practice</h4>
+          <div class="chip-row"><span class="chip">Git / GitHub</span><span class="chip">Performance Tuning</span><span class="chip">Security Hardening</span></div>
+        </div>
+      </div>
+
+      <div class="edu-strip" style="margin-top:64px;">
+        <div class="edu-item reveal">
+          <div class="k">Education</div>
+          <div class="v">BCA &amp; MCA Integrated — Bhagwan Mahavir College</div>
+        </div>
+        <div class="edu-item reveal">
+          <div class="k">Foundation</div>
+          <div class="v">Computer Science Stream — Higher Secondary</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="eyebrow" style="justify-content:center;">Get in touch</div>
+      <h2 class="reveal in">Got a project that needs <span class="accent">the whole stack</span>?</h2>
+      <p class="lead">I usually reply within a day. Tell me what you're building.</p>
+      <div class="contact-actions">
+        <a href="mailto:dpakagarwal737@gmail.com" class="btn btn-primary">Email me</a>
+        <a href="tel:+919725021663" class="btn btn-ghost">Call me →</a>
+      </div>
+      <div class="contact-row mono">
+        <a href="mailto:dpakagarwal737@gmail.com" id="emailCopy">dpakagarwal737@gmail.com <span class="copy-note">copied</span></a>
+        <a href="tel:+919725021663" id="phoneCopy">+91 97250 21663 <span class="copy-note">copied</span></a>
+        <a href="#" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">© 2026 Deepak Agarwal — Full-Stack Developer. Built with Laravel logic and too much coffee.</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  // ---------- mobile nav ----------
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // ---------- ticker ----------
+  const stackWords = ["PHP","Laravel","Node.js","WordPress","CodeIgniter","Shopify","OpenCart","MongoDB","MySQL","AWS","Razorpay","HubSpot","Zoho CRM","REST APIs","Webhooks","AngularJS"];
+  const ticker = document.getElementById('ticker');
+  const ticketHtml = stackWords.map(w => `<span><b>${w}</b></span>`).join('');
+  ticker.innerHTML = ticketHtml + ticketHtml; // duplicate for seamless loop
+
+  // ---------- scroll reveal ----------
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealEls = document.querySelectorAll('.reveal');
+  if (prefersReduced) {
+    revealEls.forEach(el => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('in'); });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => io.observe(el));
+  }
+
+  // ---------- project card tilt ----------
+  document.querySelectorAll('[data-tilt]').forEach(card => {
+    if (prefersReduced) return;
+    card.addEventListener('mousemove', (e) => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - 0.5;
+      const y = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `perspective(700px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateY(-2px)`;
+    });
+    card.addEventListener('mouseleave', () => { card.style.transform = 'perspective(700px) rotateY(0) rotateX(0)'; });
+  });
+
+  // ---------- copy to clipboard ----------
+  function wireCopy(id, value) {
+    const el = document.getElementById(id);
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigator.clipboard?.writeText(value).catch(() => {});
+      const note = el.querySelector('.copy-note');
+      note.classList.add('show');
+      setTimeout(() => note.classList.remove('show'), 1400);
+      setTimeout(() => { window.location.href = id === 'emailCopy' ? `mailto:${value}` : `tel:${value}`; }, 250);
+    });
+  }
+  wireCopy('emailCopy', 'dpakagarwal737@gmail.com');
+  wireCopy('phoneCopy', '+919725021663');
+
+  // ---------- 3D stack visualization ----------
+  (function initStack() {
+    const canvas = document.getElementById('stack-canvas');
+    const stage = canvas.parentElement;
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x080b12, 0.045);
+
+    const camera = new THREE.PerspectiveCamera(42, stage.clientWidth / stage.clientHeight, 0.1, 100);
+    camera.position.set(0, 1.4, 11);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(stage.clientWidth, stage.clientHeight);
+
+    const group = new THREE.Group();
+    scene.add(group);
+
+    const layerColors = [0x4FE3D1, 0xDE9A63, 0x4FE3D1, 0xFF9A44, 0xDE9A63];
+    const layerCount = 5;
+    const spacing = 1.05;
+    const layers = [];
+
+    for (let i = 0; i < layerCount; i++) {
+      const w = 3.6 - i * 0.18;
+      const geo = new THREE.BoxGeometry(w, 0.22, w);
+      const mat = new THREE.MeshStandardMaterial({
+        color: layerColors[i % layerColors.length],
+        transparent: true,
+        opacity: 0.08,
+        roughness: 0.4,
+        metalness: 0.2
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      const y = (i - (layerCount - 1) / 2) * spacing;
+      mesh.position.y = y;
+      group.add(mesh);
+
+      const edges = new THREE.EdgesGeometry(geo);
+      const lineMat = new THREE.LineBasicMaterial({ color: layerColors[i % layerColors.length], transparent: true, opacity: 0.85 });
+      const lineSeg = new THREE.LineSegments(edges, lineMat);
+      lineSeg.position.y = y;
+      group.add(lineSeg);
+
+      // corner nodes
+      const cornerGeo = new THREE.SphereGeometry(0.045, 8, 8);
+      const cornerMat = new THREE.MeshBasicMaterial({ color: layerColors[i % layerColors.length] });
+      const half = w / 2;
+      [[half, half], [half, -half], [-half, half], [-half, -half]].forEach(([cx, cz]) => {
+        const s = new THREE.Mesh(cornerGeo, cornerMat);
+        s.position.set(cx, y, cz);
+        group.add(s);
+      });
+
+      layers.push({ mesh, y, w });
+    }
+
+    // vertical connector lines between layer centers
+    for (let i = 0; i < layerCount - 1; i++) {
+      const points = [
+        new THREE.Vector3(0, layers[i].y, 0),
+        new THREE.Vector3(0, layers[i + 1].y, 0)
+      ];
+      const geo = new THREE.BufferGeometry().setFromPoints(points);
+      const mat = new THREE.LineBasicMaterial({ color: 0x2a3548, transparent: true, opacity: 0.6 });
+      group.add(new THREE.Line(geo, mat));
+    }
+
+    // ambient drifting particles
+    const particleCount = 90;
+    const particleGeo = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount; i++) {
+      positions[i * 3] = (Math.random() - 0.5) * 9;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 7;
+      positions[i * 3 + 2] = (Math.random() - 0.5) * 9;
+    }
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const particleMat = new THREE.PointsMaterial({ color: 0x4FE3D1, size: 0.035, transparent: true, opacity: 0.5 });
+    const particles = new THREE.Points(particleGeo, particleMat);
+    scene.add(particles);
+
+    // lights
+    scene.add(new THREE.AmbientLight(0x223344, 1.2));
+    const light1 = new THREE.PointLight(0x4FE3D1, 2.2, 20);
+    light1.position.set(4, 3, 5);
+    scene.add(light1);
+    const light2 = new THREE.PointLight(0xDE9A63, 1.8, 20);
+    light2.position.set(-4, -2, 4);
+    scene.add(light2);
+
+    group.rotation.x = 0.28;
+    group.rotation.y = 0.5;
+
+    let targetRotY = group.rotation.y;
+    let targetRotX = group.rotation.x;
+    let dragging = false;
+    let lastX = 0, lastY = 0;
+    let autoRotate = !prefersReduced;
+
+    canvas.addEventListener('pointerdown', (e) => {
+      dragging = true; autoRotate = false;
+      lastX = e.clientX; lastY = e.clientY;
+      canvas.setPointerCapture(e.pointerId);
+    });
+    canvas.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      targetRotY += dx * 0.006;
+      targetRotX = Math.max(-0.6, Math.min(0.9, targetRotX + dy * 0.005));
+      lastX = e.clientX; lastY = e.clientY;
+    });
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach(evt =>
+      canvas.addEventListener(evt, () => { dragging = false; })
+    );
+
+    function resize() {
+      const w = stage.clientWidth, h = stage.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    }
+    window.addEventListener('resize', resize);
+
+    const clock = new THREE.Clock();
+    function animate() {
+      requestAnimationFrame(animate);
+      const t = clock.getElapsedTime();
+
+      if (autoRotate) targetRotY += 0.0022;
+      group.rotation.y += (targetRotY - group.rotation.y) * 0.08;
+      group.rotation.x += (targetRotX - group.rotation.x) * 0.08;
+      group.position.y = Math.sin(t * 0.6) * 0.12;
+
+      particles.rotation.y = t * 0.02;
+
+      renderer.render(scene, camera);
+    }
+    animate();
+  })();
+</script>
 </body>
 </html>
