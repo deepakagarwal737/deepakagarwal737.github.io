@@ -394,7 +394,23 @@
 
 <header>
   <nav class="container">
-    <div class="logo">DA<span style="color:var(--text-dim);">.</span></div>
+    <div class="logo">
+      <svg viewBox="0 0 200 200" width="70" height="70" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="logoGrad" x1="0" y1="0" x2="200" y2="200" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#4FE3D1"/>
+            <stop offset="1" stop-color="#DE9A63"/>
+          </linearGradient>
+        </defs>
+        <rect width="200" height="200" fill="#080B12"/>
+        <polygon points="100,12 177,56 177,144 100,188 23,144 23,56" fill="#111826" stroke="url(#logoGrad)" stroke-width="5"/>
+        <line x1="177" y1="56" x2="196" y2="44" stroke="#DE9A63" stroke-width="4.5" stroke-linecap="round"/>
+        <circle cx="196" cy="44" r="6.5" fill="#4FE3D1"/>
+        <line x1="23" y1="144" x2="4" y2="156" stroke="#4FE3D1" stroke-width="4.5" stroke-linecap="round"/>
+        <circle cx="4" cy="156" r="6.5" fill="#DE9A63"/>
+        <text x="100" y="126" text-anchor="middle" font-family="'Space Grotesk', 'Arial', sans-serif" font-weight="700" font-size="68" fill="#F3F5FA">DA</text>
+      </svg>
+    </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#work">Work</a></li>
       <li><a href="#stack">Stack</a></li>
@@ -641,7 +657,7 @@
 </main>
 
 <footer>
-  <div class="container">© 2026 Deepak Agarwal — Full-Stack Developer. Built with Laravel logic and too much coffee.</div>
+  <div class="container">© 2026 Deepak Agarwal — Full-Stack Developer. Built with logic and too much coffee.</div>
 </footer>
 
 <script>
